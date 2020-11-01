@@ -1,0 +1,62 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:latest
+    container_name: db
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    ports:
+        - "5432:5432"
+    restart: always
+  redis:
+    image: redis:5
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: always
+  web:
+    image: django:latest
+    container_name: web
+    build:
+      context: .
+      dockerfile: ./django/Dockerfile
+    volumes:
+      - static_data:/vol/web
+    tty: true
+    depends_on:
+      - db
+      - redis
+    restart: always
+  proxy:
+    image: nginx:latest
+    container_name: proxy
+    build:
+      context: .
+      dockerfile: ./django/Dockerfile
+    volumes:
+      - static_data:/vol/static  
+    ports:
+      - "8080:8080"
+    depends_on:
+      - web
+    restart: always
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    restart: always
+  selenium:
+    image: selenium/standalone-chrome
+    container_name: selenium
+    ports:
+      - "4444:4444"
+volumes:
+  static_data:
