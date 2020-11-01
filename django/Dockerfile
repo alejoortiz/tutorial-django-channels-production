@@ -1,22 +1,22 @@
 FROM python:3.8
 # create directory
-RUN mkdir -p /code
-# add code directory to path
-ENV PATH="/code:${PATH}"
+RUN mkdir -p /app
+# add app directory to path
+ENV PATH="/app:${PATH}"
 # change directory
-WORKDIR /code
+WORKDIR /app
 # copy requirements
-COPY ./django/requirements.txt /code/
+COPY ./django/requirements.txt /app/
 # install requirements
 RUN pip install -r requirements.txt
 # copy the app into the container
-COPY ./code /code
+COPY ./app /app
 # copy the scripts into the container
-COPY ./django/entrypoint.sh /code/
+COPY ./django/entrypoint.sh /app/
 # give permisions to execute the scripts
 RUN chmod +x entrypoint.sh
 # copy the scripts into the container
-COPY ./django/wait_for_postgres.py /code/
+COPY ./django/wait_for_postgres.py /app/
 # create directories inside docker for static
 RUN mkdir -p /vol/web/static
 # create a new user to avoid use root

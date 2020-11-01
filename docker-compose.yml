@@ -16,7 +16,7 @@ services:
     ports:
       - "6379:6379"
     restart: always
-  web:
+  app:
     image: django:latest
     container_name: web
     build:
@@ -24,7 +24,10 @@ services:
       dockerfile: ./django/Dockerfile
     volumes:
       - static_data:/vol/web
-    tty: true
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=je+702%ye)y3g@@gji3e6&!&*^b-as9jvbbml(45lt6p9wv(&8
+      - ALLOWED_HOSTS=127.0.0.1,localhost
     depends_on:
       - db
       - redis
@@ -34,13 +37,13 @@ services:
     container_name: proxy
     build:
       context: .
-      dockerfile: ./django/Dockerfile
+      dockerfile: ./nginx/Dockerfile
     volumes:
       - static_data:/vol/static  
     ports:
       - "8080:8080"
     depends_on:
-      - web
+      - app
     restart: always
   pgadmin:
     image: dpage/pgadmin4
