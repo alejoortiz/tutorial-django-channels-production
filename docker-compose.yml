@@ -32,7 +32,7 @@ services:
       - db
       - redis
     expose:
-      - 8000
+      - "8000"
     restart: always
   asgiserver:
     image: asgiserver:latest
@@ -40,6 +40,7 @@ services:
     build:
       context: .
       dockerfile: ./asgiserver/Dockerfile
+    tty: true
     environment:
       - DEBUG=1
       - SECRET_KEY=je+702%ye)y3g@@gji3e6&!&*^b-as9jvbbml(45lt6p9wv(&8
@@ -48,7 +49,7 @@ services:
       - db
       - redis
     expose:
-      - 8001
+      - "8001"
     restart: always
   proxy:
     image: nginx:latest

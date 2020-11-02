@@ -6,5 +6,7 @@ set -e
 python3 wait_for_postgres.py
 # for static files
 python manage.py collectstatic --noinput
-# enable proxy for production on app
-daphne app.asgi:application --bind 0.0.0.0 --port 8001
+# check for migrations on db
+python manage.py migrate
+# enable proxy for production on websockets 0.0.0.0:8001
+python manage.py runserver 0.0.0.0:8001
