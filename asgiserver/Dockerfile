@@ -6,17 +6,17 @@ ENV PATH="/app:${PATH}"
 # change directory
 WORKDIR /app
 # copy requirements
-COPY ./django/requirements.txt /app/
+COPY ./asgiserver/requirements.txt /app/
 # install requirements
 RUN pip install -r requirements.txt
 # copy the app into the container
 COPY ./app /app
 # copy the scripts into the container
-COPY ./django/entrypoint.sh /app/
+COPY ./asgiserver/entrypoint.sh /app/
 # give permisions to execute the scripts
 RUN chmod +x entrypoint.sh
 # copy the scripts into the container
-COPY ./django/wait_for_postgres.py /app/
+COPY ./asgiserver/wait_for_postgres.py /app/
 # create directories inside docker for static
 RUN mkdir -p /vol/web/static
 # create a new user to avoid use root

@@ -17,11 +17,11 @@ services:
       - "6379:6379"
     restart: always
   wsgiserver:
-    image: django:latest
-    container_name: web
+    image: wsgiserver:latest
+    container_name: wsgiserver
     build:
       context: .
-      dockerfile: ./django/Dockerfile
+      dockerfile: ./wsgiserver/Dockerfile
     volumes:
       - static_data:/vol/web
     environment:
@@ -33,6 +33,22 @@ services:
       - redis
     expose:
       - 8000
+    restart: always
+  asgiserver:
+    image: asgiserver:latest
+    container_name: asgiserver
+    build:
+      context: .
+      dockerfile: ./asgiserver/Dockerfile
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=je+702%ye)y3g@@gji3e6&!&*^b-as9jvbbml(45lt6p9wv(&8
+      - ALLOWED_HOSTS=127.0.0.1,localhost
+    depends_on:
+      - db
+      - redis
+    expose:
+      - 8001
     restart: always
   proxy:
     image: nginx:latest
