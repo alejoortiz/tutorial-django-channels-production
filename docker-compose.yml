@@ -25,7 +25,7 @@ services:
     volumes:
       - static_data:/vol/web
     environment:
-      - DEBUG=1
+      - DEBUG=0
       - SECRET_KEY=je+702%ye)y3g@@gji3e6&!&*^b-as9jvbbml(45lt6p9wv(&8
       - ALLOWED_HOSTS=127.0.0.1,localhost
     depends_on:
@@ -40,9 +40,8 @@ services:
     build:
       context: .
       dockerfile: ./asgiserver/Dockerfile
-    tty: true
     environment:
-      - DEBUG=1
+      - DEBUG=0
       - SECRET_KEY=je+702%ye)y3g@@gji3e6&!&*^b-as9jvbbml(45lt6p9wv(&8
       - ALLOWED_HOSTS=127.0.0.1,localhost
     depends_on:
