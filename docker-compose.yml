@@ -26,7 +26,7 @@ services:
       - static_data:/vol/web
     environment:
       - DEBUG=0
-      - SECRET_KEY=je+702%ye)y3g@@gji3e6&!&*^b-as9jvbbml(45lt6p9wv(&8
+      - SECRET_KEY=insert_your_keys
       - ALLOWED_HOSTS=127.0.0.1,localhost
     depends_on:
       - db
@@ -42,7 +42,7 @@ services:
       dockerfile: ./asgiserver/Dockerfile
     environment:
       - DEBUG=0
-      - SECRET_KEY=je+702%ye)y3g@@gji3e6&!&*^b-as9jvbbml(45lt6p9wv(&8
+      - SECRET_KEY=insert_your_keys
       - ALLOWED_HOSTS=127.0.0.1,localhost
     depends_on:
       - db
